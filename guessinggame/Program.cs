@@ -10,11 +10,11 @@ namespace guessinggame
         {
             if (char.ToLower(answerInput) == 'y')
             {
-               return "Great, let's get playing";
+                return "Great, let's get playing";
             }
             else if (char.ToLower(answerInput) == 'n')
             {
-               return "No problem, maybe another time";
+                return "No problem, maybe another time";
             }
             else return "that's not an answer i can ";
 
@@ -30,7 +30,22 @@ namespace guessinggame
             return playGameAnswer(answerInput);
         }
 
+        public static bool guessChecker(int setNum, int guessedNum)
+        {
+            return guessedNum != setNum ? false : true;
 
+        }
+
+        public static string howCloseSum(int setNum, int guessedNum)
+        {
+
+            return setNum < guessedNum ? "lower" : "higher";
+        }
+
+        public static string guessTheNumberInput()
+        {
+            return Console.ReadLine();
+        }
 
 
         static void Main(string[] args)
@@ -49,29 +64,55 @@ namespace guessinggame
                 Environment.Exit(0);
             }
 
-              while (reply != "Great, let's get playing")
+            while (reply != "Great, let's get playing")
             {
-              reply = askToPlay(nameInput);
+                reply = askToPlay(nameInput);
             }
-          
+
             Console.WriteLine(reply);
 
             Console.WriteLine("Let me just set up the game");
 
+
+
             var rand = new Random();
 
-            int guessTheNum = rand.Next();
+            int guessTheNum = rand.Next(20);
 
             Console.WriteLine("You have to guess the correct number, it will be between 1 and 20");
 
             Console.WriteLine("You have 5 attempts, i'll give you a clue after each try");
+            Console.WriteLine("Let's start, have a guess...");
 
 
+            string inputGuess = guessTheNumberInput();
 
 
+            int attempts = 5;
 
 
-        }   
-     }
-    
+            bool guess = guessChecker(guessTheNum, int.Parse(inputGuess));
+
+
+            while (guess == false && attempts > 0)
+            {
+                string howClose = howCloseSum(guessTheNum, int.Parse(inputGuess));
+                attempts--;
+                Console.WriteLine("You need to go {0}, you have {1} attemps left", howClose, attempts);
+                inputGuess = guessTheNumberInput();
+                guess = guessChecker(guessTheNum, int.Parse(inputGuess));
+            }
+
+            if (attempts == 0)
+            {
+                Console.WriteLine("You lose");
+            }
+            else if (guess == true)
+            {
+                Console.WriteLine("You Win");
+            }
+
+        }
+    }
+
 }
