@@ -50,7 +50,7 @@ namespace guessinggame
 
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
 
             Console.WriteLine("Hey, please enter your name");
 
@@ -60,6 +60,7 @@ namespace guessinggame
 
             if (reply == "No problem, maybe another time")
             {
+                Console.WriteLine(" ");
                 Console.WriteLine(reply);
                 Environment.Exit(0);
             }
@@ -73,45 +74,65 @@ namespace guessinggame
 
             Console.WriteLine("Let me just set up the game");
 
-
-
-            var rand = new Random();
-
-            int guessTheNum = rand.Next(20);
-
-            Console.WriteLine("You have to guess the correct number, it will be between 1 and 20");
-
-            Console.WriteLine("You have 5 attempts, i'll give you a clue after each try");
-            Console.WriteLine("Let's start, have a guess...");
-
-
-            string inputGuess = guessTheNumberInput();
-
-
-            int attempts = 5;
-
-
-            bool guess = guessChecker(guessTheNum, int.Parse(inputGuess));
-
-
-            while (guess == false && attempts > 0)
+            while (true)
             {
-                string howClose = howCloseSum(guessTheNum, int.Parse(inputGuess));
-                attempts--;
-                Console.WriteLine("You need to go {0}, you have {1} attemps left", howClose, attempts);
-                inputGuess = guessTheNumberInput();
-                guess = guessChecker(guessTheNum, int.Parse(inputGuess));
-            }
 
-            if (attempts == 0)
-            {
-                Console.WriteLine("You lose");
-            }
-            else if (guess == true)
-            {
-                Console.WriteLine("You Win");
-            }
+                var rand = new Random();
 
+                int guessTheNum = rand.Next(20);
+
+                Console.WriteLine("You have to guess the correct number, it will be between 1 and 20");
+
+                Console.WriteLine("You have 5 attempts, i'll give you a clue after each try");
+
+                Console.WriteLine("Let's start, have a guess...");
+
+
+                string inputGuess = guessTheNumberInput();
+
+
+                int attempts = 5;
+
+
+                bool guess = guessChecker(guessTheNum, int.Parse(inputGuess));
+
+
+                while (guess == false && attempts > 0)
+                {
+                    string howClose = howCloseSum(guessTheNum, int.Parse(inputGuess));
+                    attempts--;
+                    Console.WriteLine("You need to go {0}, you have {1} attemps left", howClose, attempts);
+                    inputGuess = guessTheNumberInput();
+                    guess = guessChecker(guessTheNum, int.Parse(inputGuess));
+                }
+
+                if (attempts == 0)
+                {
+                    Console.WriteLine("You lose");
+                }
+                else if (guess == true)
+                {
+                    Console.WriteLine("You Win");
+                }
+
+                Console.WriteLine("Play Again? [Y or N]");
+
+                string answer = Console.ReadLine().ToUpper();
+
+                if (answer == "Y")
+                {
+                    continue;
+                }
+                else if (answer == "N")
+                {
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+
+            }
         }
     }
 
